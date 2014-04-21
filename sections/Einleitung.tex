@@ -1,0 +1,9 @@
+\section{Einleitung}
+
+Der Begriff ``Web Security'' hat in den letzten Jahren immer mehr an Bedeutung gewonnen. Die Entwicklung von ``sicheren'' Webapplikationen ist heute ein wichtiges und herausforderndes Thema f\"ur jeden, der irgendeine Art von Webauftritt oder Service \"uber das Internet anbietet. Durch mehr oder weniger komplexe Attacken kann selbst in vermeintlich harmlose Webformulare eigener Code ``injected'' werden, was dazu f\"uhren kann dass m\"oglicherweise sogar vertrauliche Daten wie Kreditkarteninformationen oder \"ahnliches in falsche H\"ande geraten.\\
+Obwohl die Bedrohung durch Angriffe heute h\"oher ist denn je, vernachl\"assigen viele Administratoren die ausreichende Sicherung ihrer Systeme. Laut einem Bericht der Firma ``Cenzic'' hatten 96\% der von ihnen getesteten Web Applikationen massive und ernst zu nehmende Sicherheitsl\"ucken.\cite{vulnerabilityReport2014}
+Diese Ausarbeitung soll einige der g\"angigen Angriffsarten, wie etwa Cross-Site-Scripting (XSS) oder SQL-Injections, inklusive ihrer Verwendung aufzeigen und darlegen wie Webapplikationen gegen derartige Angriffe gesch\"utzt werden k\"onnen.
+
+\subsection{Angriffsarten}
+
+Es gibt viele verschiedene Arten von Angriffen um Schwachstellen auszunutzen. Mit 25\% ist dabei XSS die verbreitetste Schwachstelle und daher auch das beliebteste Angriffsziel. Gefolgt von ``Information Leakage'' mit 23\%, Fehler in Authentifizierung und Autorisierung mit 15\%, Session Management Fehlern mit 13\%, SQL Injections mit 7\% und Cross-Site Request Forgery (CSRF) mit 6\%.\cite{vulnerabilityReport2014} In dieser Ausarbeitung wird insbesondere auf XSS und SQL Injections der Schwerpunkt gelegt, aber auch andere Arten werden angef\"uhrt und beschrieben.

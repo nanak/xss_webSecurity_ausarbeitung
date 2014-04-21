@@ -1,0 +1,68 @@
+\documentclass[letterpaper, 12pt]{article}
+
+
+\input special/preamble.tex
+
+\let\tempsection\section
+\renewcommand\section[1]{\vspace{-0.3cm}\tempsection{#1}\vspace{-0.3cm}}
+\WithSuffix\newcommand\section*[1]{\tempsection*{#1}}
+
+\let\tempsubsection\subsection
+\renewcommand\subsection[1]{\vspace{0cm}\tempsubsection{#1}\vspace{0cm}}
+
+\let\tempsubsubsection\subsubsection
+\renewcommand\subsubsection[1]{\vspace{0cm}\tempsubsubsection{#1}\vspace{0cm}}
+
+\usepackage[hmargin=1in,vmargin=0.95in]{geometry}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{url}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lfoot{Nanak Tattyrek}
+\cfoot{}
+\rfoot{\thepage}
+\renewcommand{\familydefault}{\sfdefault}
+
+\usepackage[nolist]{acronym}
+\usepackage[ngerman]{babel}
+
+\linespread{0.94}
+\begin{document}
+\parindent 0pt
+\parskip 6pt
+
+\pagenumbering{Roman} 
+\input{special/title}
+
+\tableofcontents
+\ 
+
+\clearpage
+
+\pagenumbering{arabic}
+
+\vspace{-0.5cm}
+
+\input sections/Einleitung.tex
+\clearpage
+%\input sections/Architekturen.tex
+%\input sections/KeyValue.tex
+%\input sections/Dokumentenbasiert.tex
+%\input sections/GraphenDB.tex
+%\input sections/Spaltenorientiert.tex
+%\clearpage
+%\input sections/SQLvsNOSQL.tex
+%\clearpage
+%\input sections/Fazit.tex
+
+%\clearpage
+
+\bibliographystyle{unsrt}
+\bibliography{references}
+\listoftables
+\lstlistoflistings
+\listoffigures
+
+\end{document}

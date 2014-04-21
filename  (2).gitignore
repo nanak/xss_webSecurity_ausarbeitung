@@ -1,0 +1,10 @@
+*.aux
+*.lo[fglt]
+*.out
+*.pdf
+*.gz
+*.toc
+*.bak
+*.bbl
+*.blg
+*.dvi

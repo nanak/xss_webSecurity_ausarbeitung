@@ -1,13 +1,60 @@
 \section{Cross-Site Request Forgery (CSRF)}
-Cross-Site Request Forgery ist eine Angriffsart, welche den Browser eines (eingeloggten) Users dazu zwingt, f\"ur ihn ungewollte Aktionen durchzuf\"uhren.
-
-
+Cross-Site Request Forgery ist eine Angriffsart, welche den Browser eines (eingeloggten) Users dazu zwingt, f\"ur den User ungewollte Aktionen durchzuf\"uhren. \"Ahnlich wie beim XSS wird der Angriff \"uber eine speziell daf\"ur modifizierte URL gestartet.
 \cite{hackingWebAppsBuch}
-%\cite{heiseRisiken}
 
+\subsection{Funktionsweise}
+Im Gegensatz zu XSS ben\"otigt CSRF keine Fehler in Webapplikationen um zu Funktionieren. Browser senden \"ublicherweise mit jeder Anfrage an eine Website, s\"amtliche Session Informationen wie etwa Session Cookies oder simple Authentifizierungsdaten mit. Dadurch kann ein Angreifer Aktionen im Namen des Opfers durchf\"uhren, da die Website keine M\"oglichkeit hat die Legitimit\"at der Anfrage zu \"uberpr\"ufen. \cite{owaspCSRF}
 
 \subsection{Effekte}
+Der Angreifer kann im Namen seines Opfers Produkte kaufen, Nutzerdaten abfragen, sein Passwort \"andern oder andere Funktionen der Website nutzen. Allerdings ist das Zeitfenster f\"ur einen erfolgreichen Angriff oft beschr\"ankt, da viele Sessions \"uber ein Timeout verf\"ugen nachdem sie unbrauchbar werden. 
+\cite{owaspCSRF} \cite{heiseRisiken}
 
+\clearpage
 \subsection{Schutzma{\ss}nahmen}
+Wie bei anderen Attacken ist das Filtern von Input der erste Schutzmechanismus. Das setzen eines verschl\"usselten Cookies hilft nichts gegen diese Angriffsart, da der Browser selbst das Cookie bei der n\"achsten Anfrage von sich aus mit sendet und deswegen nicht verifiziert dass der User bewusst diese Anfrage gesendet hat. Einige andere Schutzma{\ss}nahmen werden im Folgenden aufgef\"uhrt.
 
-\subsection{Beispiel?}
+\begin{itemize}
+\item Verwendung von ``Nonce'' in der URL\\
+Eine Nonce ist ein zuf\"allig generierter Session Key welcher nur ein einziges Mal verwendet wird, dadurch kann man die Legitimit\"at einer Anfrage \"uberpr\"ufen.\\
+\item Einen Hash aus Session ID, Funktionsname und Serverseitigem ``secret-key''\\
+Dadurch kann ebenfalls \"uberpr\"uft werden ob der User tats\"achlich selbst die angefragte Funktion aufgerufen hat.\\
+\item Die Herkunft des HTTP Request \"uberpr\"ufen\\
+Durch \"Uberpr\"ufen der Herkunft des HTTP Request, kann versichert werden, dass der User selbst die Anfrage gesandt hat, da Anfragen von Fremdseiten nicht mehr funktionieren. Diese Ma{\ss}nahme kann allerdings durch hinzuziehen von XSS umgangen werden.
+\end{itemize}
+
+Verwundbarkeit gegen CSRF ist zwar ein grundlegendes Problem von Web Services, jedoch kann sich der User selbst dagegen sch\"utzen. Die einfachste und effektivste Art daf\"ur ist einfach aus allen Web Services, die man gerade nicht benutzt, ausloggen. Das mindert zwar den Komfort des Surfens im Internet, allerdings l\"asst sich eine nicht authentifizierte Sitzung auch nicht ausnutzen.
+\cite{owaspCSRF}
+
+\clearpage
+\subsection{Beispiel}
+In diesem Beispiel will Benutzer ``Alice'' \"uber das Webinterface ihrer Bank 100 Euro an ``Bob'' \"uberweisen. Daf\"ur generiert der Browser ein POST Request, welches er an die Bankwebsite sendet.
+\begin{lstlisting}[caption = Normaler POST Request]
+POST http://bank.com/transfer.do HTTP/1.1
+...
+...
+...
+Content-Length: 19;
+acct=BOB&amount=100
+\end{lstlisting}
+
+``Maria'' bemerkt nun dass die Bankwebsite den selben Transfer mithilfe folgenden GET Requests durchf\"uhrt.
+
+\begin{lstlisting}[caption = Normaler GET Request]
+GET http://bank.com/transfer.do?acct=BOB&amount=100 HTTP/1.1
+\end{lstlisting}
+
+Maria will nun einen Angriff auf Alice's Konto starten und modifiziert den GET Request so, dass 100000 Euro auf ihr Konto \"uberwiesen werden.
+
+\begin{lstlisting}[caption = Modifizierter GET Request]
+http://bank.com/transfer.do?acct=MARIA&amount=100000
+\end{lstlisting}
+
+Nun muss sie nur noch Alice dazu bringen, ihren modifizierten Link anzuklicken. Dies tut sie, indem sie Alice eine HTML Email schickt, in der sie ein ``<img>'' Tag einbindet, welches auf die Bankwebsite verweist.
+
+\begin{lstlisting}[caption = IMG Tags f\"ur eine HTML Email]
+<img src="http://bank.com/transfer.do?acct=MARIA&amount=100000" width="1" height="1" border="0">
+\end{lstlisting}
+
+Wenn Alice nun diese Email \"offnet, sieht sie nur ein kleines Icon, welches zeigt dass das Bild nicht angezeigt werden kann. Die Zahlungsanweisung wurde trotzdem an die Bank gesendet. Die einzige Voraussetzung f\"ur den Erfolg dieses Angriffs ist dass Alice gerade bei Ihrer Bankwebsite eingeloggt ist.
+
+\cite{owaspCSRF}

@@ -18,10 +18,26 @@
   owner = {Nanak}
 }
 
+@ONLINE{ciscoSQLInjection,
+  note = {\url{http://www.cisco.com/web/about/security/intelligence/sql_injection.html}},
+  title = {Understanding SQL Injection},
+  url = {http://www.cisco.com/web/about/security/intelligence/sql_injection.html},
+  year = {2014-04-22},
+  owner = {Nanak}
+}
+
 @ONLINE{heiseRisiken,
   note = {\url{http://www.heise.de/developer/artikel/Querschau-der-Risiken-1028917.html}},
   title = {Querschau der Risiken - Heise.de},
   url = {http://www.heise.de/developer/artikel/Querschau-der-Risiken-1028917.html},
+  year = {2014-04-22},
+  owner = {Nanak}
+}
+
+@ONLINE{owaspCSRF,
+  note = {\url{https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29}},
+  title = {Cross-Site Request Forgery (CSRF)},
+  url = {https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29},
   year = {2014-04-22},
   owner = {Nanak}
 }

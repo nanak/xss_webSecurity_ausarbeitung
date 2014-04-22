@@ -15,7 +15,7 @@ Diese Art ist die am wenigsten verbreitete, da sie von vielen Angreifern als auc
 \cite{xssBuch}
 
 \subsection{Effekte}
-Wie schon in der Einleitung zu XSS beschrieben, l\"asst sich wesentlich mehr damit anstellen als nur l\"astige Mitteilungsboxen darzustellen. Im folgenden werden die m\"oglichen Effekte durch eine XSS Attacke erl\"autert.
+Wie schon in der Einleitung zu XSS beschrieben, l\"asst sich wesentlich mehr anstellen als nur l\"astige Mitteilungsboxen darzustellen. Im folgenden werden die m\"oglichen Effekte durch eine XSS Attacke erl\"autert.
 \cite{xssBuch}
 
 \subsubsection{Auslesen von Cookies}
@@ -31,6 +31,7 @@ Neben Cookies, kann nat\"urlich auch die aufgerufene Website an sich ausgelesen 
 Gesammelte Daten m\"ussen auch wieder zum Angreifer \"ubertragen werden k\"onnen. Dies kann durch einen Web Server geschehen, welcher sich im Besitz des Angreifers befindet. Die Per XSS ausgelesenen Daten werden nun in Form einer ung\"ultigen Anfrage an den Server gesandt. Es wird also beispielsweise ein Bild mithilfe des ``<img>'' Tags angefragt, welches nicht existiert. In diese Anfrage werden die vom Opfer extrahierten Daten angeh\"angt sodass sie \"uber das ``access\_log'' File des Webservers ausgelesen werden k\"onnen. Praktischerweise enth\"alt das Log File auch noch zus\"atzliche Informationen wie IP Adresse es Opfers und \"ahnliches.
 \cite{xssBuch}
 
+\clearpage
 \subsection{Vermeintliche Schutzmechanismen}
 Es gibt einige Gegenma{\ss}nahmen, welche oft eine sehr einfache Struktur haben, aber nicht genug Schutz gegen derartige Angriffe bieten.\\
 \begin{itemize}
@@ -45,6 +46,7 @@ Das Begrenzen der Zeichenanzahl h\"atte zus\"atzlich zur Folge, dass nur noch we
 Alle bisher genannten Schutzmechanismen sehen auf den ersten Blick nach brauchbarem Schutz mit wenig Aufwand aus. Leider k\"onnen sie aber mit mehr oder weniger Aufwand umgangen werden. Es sind zum Beispiel in modernen Browsern oft keine ``<script>'' Tags mehr notwendig, dass JavaScript Code ausgef\"uhrt wird. Es gibt einige Ans\"atze um diese Tags zu umgehen.
 \cite{xssBuch}
 
+\clearpage
 \subsection{Escapen und listen-basierte Filter}
 \subsubsection{Escapen von Sonderzeichen}
 Wenn die M\"oglichkeit, Code in bestehende Tags einzuf\"ugen nicht existiert, m\"ussen eigene Tags geschaffen werden. Wie bereits vorher erw\"ahnt, ist das simple Filtern von Tags nicht ausreichend. Mithilfe von Escapen kann man allerdings wesentlich geschickter an die Sache herangehen. Im folgenden werden die Sonderzeichen mit ihren Escape Sequenzen gegen\"ubergestellt.\\
@@ -80,6 +82,7 @@ Wenn die M\"oglichkeit, Code in bestehende Tags einzuf\"ugen nicht existiert, m\
 W\"ahrend nun ein ``<script src = script.js>'' noch zum Ausf\"uhren des an dieser Stelle geladenen Scripts f\"uhrt, wir ein escaptes ``\&lt;script src \&equals; script.js\&gt;'' nur noch als harmloser Text im Browser angezeigt.
 \cite{xssBuch}
 
+\clearpage
 \subsubsection{Erkennen von Scripten mithilfe von Listen}
 Eine derartige ``Blacklist'' von sch\"adlichen Scripten ist ein sehr hoher Aufwand, da der Ersteller der Liste \"uber sehr viel Fachwissen und verschiedenste Angriffsarten und -vektoren verf\"ugen muss. Aus diesem Grund fertigt ein Web-Entwickler eine solche Liste nicht selbst, sondern beschafft diese von externen Personen oder Organisationen. Ein Beispiel w\"are das Projekt ``safehtml'' welches in der Vergangenheit einen hohen Bekanntheitsgrad erreicht hat, aber leider seit einiger Zeit nicht mehr weitergef\"uhrt wird. Blacklisten haben aber naturgegebene Schwachstellen wie etwa die Unvollst\"andigkeit, man kann nie wissen ob die verwendete Liste bereits die neuesten Sicherheitsrisiken beinhaltet oder hinterherhinkt.
 \cite{xssBuch}
@@ -88,4 +91,24 @@ Eine derartige ``Blacklist'' von sch\"adlichen Scripten ist ein sehr hoher Aufwa
 Prinzipiell ist das Escapen von Inputs vorzuziehen, da es sich in der Praxis als sehr belastbar erwiesen hat und nicht \"uber die bekannten Sch\"achen von Blacklists verf\"ugt. Allerdings gibt es F\"alle wo das Escapen nicht zielf\"uhrend ist. Wenn beispielsweise bei einer Webanwendung wie einem Webmail Client diverse HTML Tags gebraucht werden, kann man diese nicht einfach escapen, da sonst m\"oglicherweise die Formatierung von Emails vernichtet w\"urde. Auch wenn eine bestehende Web Applikation gegen XSS Attacken gesichert werden soll ist es manchmal sinnvoller auf Listen zu setzten. Ein re-design von Input Elementen greift tief in die Struktur einer Applikation ein und Formatierungen von Texten werden m\"oglicherweise unm\"oglich gemacht. Da dies sehr Zeit- und Kostenintensiv sein kann, ist es manchmal sinnvoller auf Listenbasierte Mechanismen zur\"uckzugreifen. Diese reichen zwar nicht an die Sicherheitsstandards von Escapen heran, allerdings kann damit doch schnelle und bis zu einem gewissen Grad ausreichende Abhilfe geschafft werden.
 \cite{xssBuch}
 
-\subsection{Beispiele?}
+\clearpage
+\subsection{Beispiel}
+\textbf{Hier ein Beispiel eines sehr simplen XSS Angriffs.}\\\\
+Eine normale Suchanfrage.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.3\linewidth]{images/xss1.png}
+		\caption{Suchanfrage}
+		\label{titel}
+	\end{center}
+\end{figure}
+
+Das selbe Suchfeld mit injectetem Code.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.3\linewidth]{images/xss2.png}
+		\caption{XSS}
+		\label{titel}
+	\end{center}
+\end{figure}
+Die Eingabe wird vorzeitig beendet, anschlie{\ss}end der eigene Code eingef\"ugt und der nachfolgende HTML Code der Website auskommentiert. Daher wird auch die eigentliche Meldung der Suche nicht mehr angezeigt.
